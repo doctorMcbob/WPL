@@ -1,50 +1,16 @@
 s, d = [], {}
 
-code = """ 
-/* 
-Testing Debug mode
-*/
-!DEBUG
-10 print 
-10 = x
-x print
+code = """
+
 
 """
-def debug(debug_options, cmd, cmds, s=s, d=d):
-    print "cmd: ", cmd, "| d: ", d, "| s: ", s
-    i=""
-    while i != "step":
-        i=raw_input("--DEBUG--\n:")
-        if i in debug_options:
-            if i == "off": 
-                DEBUG = False
-            elif i == "quit": 
-                exit()
-            elif i == "cmds":
-                print cmds
-            elif i == "cmd":
-                print cmd
-            elif i == "s":
-                print s
-            elif i == "d":
-                print d
-
-            elif i == "cmdsappend":
-                cmds += raw_input(":").split()[::-1]
-            elif i == "sappend":
-                raw_input(":").split()[::-1]
-        elif not i:
-            i="step"
-        else:
-            print "Invalid command"
-    print "stepping... "
 
 def run(code):
     DEBUG = False
     cmds=code.split()[::-1]
     while cmds and cmds != "exit":
         cmd=cmds.pop()
-        if DEBUG: debug(debug_options=["off", "quit", "s", "d", "cmds", "cmd", "step", "cmdsappend", "sappend"], cmd=cmd, cmds=cmds)
+        if DEBUG: debug(debug_options=["off", "quit", "s", "d", "cmds", "cmd", "step", "cmdsappend"], cmd=cmd, cmds=cmds)
         if cmd == "print": print s.pop()
         
         elif cmd == "!D": print d
@@ -173,6 +139,34 @@ def run(code):
             except ValueError:
                 s.append(cmd)
 
+def debug(debug_options, cmd, cmds, s=s, d=d):
+    print "cmd: ", cmd, "| d: ", d, "| s: ", s
+    i=""
+    while i != "step":
+        i=raw_input("--DEBUG--\n:")
+        if i in debug_options:
+            if i == "off": 
+                DEBUG = False
+            elif i == "quit": 
+                exit()
+            elif i == "cmds":
+                print cmds
+            elif i == "cmd":
+                print cmd
+            elif i == "s":
+                print s
+            elif i == "d":
+                print d
+
+            elif i == "cmdsappend":
+                cmds += raw_input(":").split()[::-1]
+        elif not i:
+            i="step"
+        else:
+            print "Invalid command"
+    print "stepping... "
+
+
         
 loopsWPL = """
 /* 
@@ -213,6 +207,17 @@ inp if
     ok print
 endif
 ok print
+"""
+
+debugWPL = """ 
+/* 
+Testing Debug mode
+*/
+!DEBUG
+10 print 
+10 = x
+x print
+
 """
             
 if __name__ == "__main__":
