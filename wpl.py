@@ -1,10 +1,5 @@
 s, d = [], {}
 
-code = """
-
-
-"""
-
 def run(code):
     DEBUG = False
     cmds=code.split()[::-1]
@@ -221,4 +216,11 @@ x print
 """
             
 if __name__ == "__main__":
-    run(code)
+    import sys
+    import os
+    if os.path.isfile(sys.argv[-1]) and not sys.argv[-1] == "wpl.py":
+        code = open(sys.argv[-1], "r").read()
+        run(code)
+    else:
+        while True:
+            run(raw_input(" > "))
