@@ -1,3 +1,4 @@
-1 1 + print
-
-" This means it worked " print
+!DEBUG
+loop ( true )
+     1 1 + print
+endloop

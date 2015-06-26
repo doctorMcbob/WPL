@@ -1,13 +1,15 @@
-s, d = [], {}
+s, d, f = [], {}, {}
 
 def run(code):
     DEBUG = False
     cmds=code.split()[::-1]
     while cmds and cmds != "exit":
         cmd=cmds.pop()
-        if DEBUG: debug(debug_options=["off", "quit", "s", "d", "cmds", "cmd", "step", "cmdsappend"], cmd=cmd, cmds=cmds)
+        if DEBUG: debug(debug_options=["off", "quit", "s", "d", "f", "cmds", "cmd", 
+                                       "step", "cmdsappend"], cmd=cmd, cmds=cmds)
         if cmd == "print": print s.pop()
         
+        elif cmd == "!F": print f
         elif cmd == "!D": print d
         elif cmd == "!S": print s
         elif cmd == "!CMDS": print cmds
@@ -54,7 +56,7 @@ def run(code):
             while word != cmd:
                 string += word+" "
                 word = cmds.pop()
-            s.append(string)
+            s.append(string[:-1])
         
         elif cmd == "not":
             t = s.pop()
@@ -110,24 +112,38 @@ def run(code):
             while word != ")":
                 param.append(word)
                 word = cmds.pop() #pop second to skip the )
-                print "word: ", word, "\nparam: ", param
+                if DEBUG: print "\nword: ", word, "\nparam: ", param
             commands = []
-            depth = 1
-            print "Commands stage."
+            depth, word= 1, cmds.pop()
+            if DEBUG: print "Commands stage."
             while not (word == "endloop" and depth == 0): 
+                commands.append(word)
                 word = cmds.pop()
                 if word == "loop": depth += 1
                 elif word == "endloop": depth -= 1
-                commands.append(word)
-                print "word: ", word, "depth: ", depth, "\ncommands: ", commands
+                if DEBUG: print "word: ", word, "depth: ", depth, "\ncommands: ", commands
             pile = param + ["if"] + commands + ["loop","("] + param + [")"]+ commands + ["endloop", "endif"]
             cmds += pile[::-1]
+
+        elif cmd == ":":
+            key = s.pop()
+            commands, word = [], cmds.pop()
+            while word != "end"+key:
+                commands.append(word)
+                word = cmds.pop()
+            f[key] = commands[::-1]
+            
         elif cmd == "/*":
             word = cmds.pop()
             while word != "*/":
                 word = cmds.pop()
-        elif cmd in d: s.append(d[cmd])
-            
+    
+        elif cmd in d: 
+            s.append(d[cmd])
+
+        elif cmd in f:
+            cmds.extend(f[cmd])
+
         else:
             try:
                 s.append(int(cmd))
@@ -152,6 +168,8 @@ def debug(debug_options, cmd, cmds, s=s, d=d):
                 print s
             elif i == "d":
                 print d
+            elif i == "f":
+                print f
 
             elif i == "cmdsappend":
                 cmds += raw_input(":").split()[::-1]
