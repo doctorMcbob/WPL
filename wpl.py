@@ -3,10 +3,13 @@ s, d, f = [], {}, {}
 def run(code):
     DEBUG = False
     cmds=code.split()[::-1]
-    while cmds and cmds != "exit":
+    cmd=""
+    while cmds:
         cmd=cmds.pop()
-        if DEBUG: debug(debug_options=["off", "quit", "s", "d", "f", "cmds", "cmd", 
-                                       "step", "cmdsappend"], cmd=cmd, cmds=cmds)
+        if DEBUG: debug(debug_options=["off", "quit", "s", "d", "f", 
+                                       "cmds", "cmd", "step", 
+                                       "cmdsappend"], cmd=cmd, 
+                                       cmds=cmds)
         if cmd == "print": print s.pop()
         
         elif cmd == "!F": print f
@@ -137,20 +140,23 @@ def run(code):
             word = cmds.pop()
             while word != "*/":
                 word = cmds.pop()
-    
+
+        elif cmd == "exit":
+            exit()
+            
         elif cmd in d: 
             s.append(d[cmd])
 
         elif cmd in f:
             cmds.extend(f[cmd])
-
+        
         else:
             try:
                 s.append(int(cmd))
             except ValueError:
                 s.append(cmd)
 
-def debug(debug_options, cmd, cmds, s=s, d=d):
+def debug(debug_options, cmd, cmds, s=s, d=d, f=f):
     print "cmd: ", cmd, "| d: ", d, "| s: ", s
     i=""
     while i != "step":
