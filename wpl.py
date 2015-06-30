@@ -137,14 +137,15 @@ def run(code):
             f[key] = commands[::-1]
             
 
-        elif cmd == ":Que":
+        elif cmd == "Que":
             q = ["_Que_"]
             this = q
-            word = s.pop()
-            while word != "Que:":
+            n, i = s.pop(), 0
+            while i != n:
+                word = s.pop()
                 this.append([word])
                 this = this[1]
-                word = s.pop()
+                i += 1
             s.append(q)
 
         elif cmd == "pop":

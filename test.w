@@ -1,8 +1,5 @@
-Que: :Que
-1 push
-2 push
-3 push
+1 2 3
+3 Que
 pop print
 pop print 
 pop print
-!S
