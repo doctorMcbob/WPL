@@ -14,5 +14,16 @@ range :
       _i Que
 endrange
 
+sizeof :
+       dup = _que = _que_copy
+       0 = _n
+       _que_copy FLAG push = _que_copy
+       loop ( _que_copy pop FLAG == not )       
+       	    _n 1 + = _n
+       endloop
+       _n
+endsizeof
+
 /* test */
 10 range print
+50 range sizeof print

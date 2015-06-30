@@ -88,6 +88,7 @@ def run(code):
         elif cmd == "=": d[cmds.pop()] = s.pop()
         elif cmd == "dup": s.append(s[-1])
         elif cmd == "swap": s.extend([s.pop(), s.pop()])
+        elif cmd == "eat": s.pop()
         elif cmd == "inp": 
             inp=raw_input()
             try:
