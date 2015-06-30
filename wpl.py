@@ -136,11 +136,54 @@ def run(code):
                 word = cmds.pop()
             f[key] = commands[::-1]
             
+
+        elif cmd == ":Que":
+            q = ["_Que_"]
+            this = q
+            word = s.pop()
+            while word != "Que:":
+                this.append([word])
+                this = this[1]
+                word = s.pop()
+            s.append(q)
+
+        elif cmd == "pop":
+            dta = s.pop()
+            dtaType = dta[0]
+            if dtaType == "_Que_":
+                item = dta[1][0]
+                if len(dta[1]) > 1:
+                    dta[1] = dta[1][1]
+                else:
+                    del dta[1]
+            s.append(dta)
+            s.append(item)
+                
+        elif cmd == "push":
+            item = s.pop()
+            dta = s.pop()
+            dtaType = dta[0]
+            if dtaType == "_Que_":
+                end=dta
+                while True:
+                    try:
+                        end=end[1]
+                    except IndexError:
+                        break
+                end.append([item])
+            s.append(dta)
+
+
+
+
+
+
+
         elif cmd == "/*":
             word = cmds.pop()
             while word != "*/":
                 word = cmds.pop()
-
+        
         elif cmd == "exit":
             exit()
             
