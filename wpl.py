@@ -137,16 +137,16 @@ def run(code):
             f[key] = commands[::-1]
             
 
-        elif cmd == "Que":
-            q = ["_Que_"]
-            this = q
+        elif cmd in ["Que", "Stk"]:
+            ds = ["_"+cmd+"_"]
+            this = ds
             n, i = s.pop(), 0
             while i != n:
                 word = s.pop()
                 this.append([word])
                 this = this[1]
                 i += 1
-            s.append(q)
+            s.append(ds)
 
         elif cmd == "pop":
             dta = s.pop()
@@ -157,6 +157,20 @@ def run(code):
                     dta[1] = dta[1][1]
                 else:
                     del dta[1]
+
+            elif dtaType == "_Stk_":
+                end, n_end = dta, None
+                while True:
+                    try:
+                        end[1]
+                        n_end = end
+                        end = end[1]
+                    except IndexError:
+                        break
+                item = end[0]
+                del n_end[1]
+            else:
+                raise ValueError("Cannot pop from "+repr(dta))
             s.append(dta)
             s.append(item)
                 
@@ -164,7 +178,7 @@ def run(code):
             item = s.pop()
             dta = s.pop()
             dtaType = dta[0]
-            if dtaType == "_Que_":
+            if dtaType in ["_Que_", "_Stk_"]:
                 end=dta
                 while True:
                     try:
@@ -172,13 +186,10 @@ def run(code):
                     except IndexError:
                         break
                 end.append([item])
-            s.append(dta)
-
-
-
-
-
-
+                s.append(dta)
+            else:
+                raise ValueError("Cannot push to "+repr(dta))
+                
 
         elif cmd == "/*":
             word = cmds.pop()
