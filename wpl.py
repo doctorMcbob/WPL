@@ -1,7 +1,7 @@
 s, d, f = [], {}, {}
-
+DEBUG=False
 def run(code):
-    DEBUG = False
+    global DEBUG
     cmds=code.split()[::-1]
     cmd=""
     while cmds:
@@ -214,9 +214,10 @@ def run(code):
                 s.append(cmd)
 
 def debug(debug_options, cmd, cmds, s=s, d=d, f=f):
+    global DEBUG
     print "cmd: ", cmd, "| d: ", d, "| s: ", s
     i=""
-    while i != "step":
+    while i != "step" and DEBUG:
         i=raw_input("--DEBUG--\n:")
         if i in debug_options:
             if i == "off": 

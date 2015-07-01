@@ -32,7 +32,6 @@ sizeof :
        _n
 endsizeof
 
-/* test 
+/* test */
 10 range print
 50 range sizeof print
-*/
