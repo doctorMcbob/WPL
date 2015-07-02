@@ -173,7 +173,6 @@ def run(code):
                 del n_end[1]
             else:
                 raise ValueError("Cannot pop from "+repr(dta))
-            s.append(dta)
             s.append(item)
                 
         elif cmd == "push":
@@ -188,7 +187,6 @@ def run(code):
                     except IndexError:
                         break
                 end.append([item])
-                s.append(dta)
             else:
                 raise ValueError("Cannot push to "+repr(dta))
                 
@@ -200,7 +198,17 @@ def run(code):
         
         elif cmd == "exit":
             exit()
-            
+
+        elif cmd == "del":
+            item = cmds.pop()
+            try:
+                del d[item]
+            except IndexError:
+                try:
+                    del f[item]
+                except IndexError:
+                    raise IndexError(str(item)+" is not defined")
+
         elif cmd in d: 
             s.append(d[cmd])
 

@@ -1,0 +1,89 @@
+/*
+WPL functions for working with Ques
+*/
+
+/*	
+Function that generates a Que full of a range of ints
+the python equivalent to range(s.pop())
+*/
+
+range : 
+      = range_i
+      0 = range_n
+      1 range_i - 
+      loop ( range_n 1 range_i - > )
+      	   dup 1 swap - 
+	   range_n 1 + = range_n
+      endloop
+      range_i Que
+      del range_i del range_n 
+endrange
+
+/* 
+Function that returns size of a Que to the stack
+*/
+
+sizeof :
+       = size_que
+       0 = size_n
+       size_que FLAG push
+       size_que pop 
+       loop ( dup FLAG == not )              	     
+	     size_que pop 
+	     size_n 1 + = size_n 
+       endloop
+       eat
+       size_n Stk = size_stk
+       0 = size_i
+       loop ( size_i size_n == not )
+	    size_que size_stk pop push
+	    size_i 1 + = size_i
+       endloop
+       size_n
+       del size_n del size_que del size_stk del size_i
+       
+endsizeof
+
+/*
+Function Copy. makes a copy of a Que
+*/
+
+copy : 
+     = copy_que
+     0 Que = copy_quecopy
+     0 = copy_i
+     loop ( copy_i copy_que sizeof == not )
+     	  copy_que pop = copy_item
+	  copy_que _item push
+	  copy_quecopy copy_item push
+	  copy_i 1 + = copy_i
+     endloop
+     copy_quecopy
+     del copy_quecopy del copy_que del copy_i del copy_item
+endcopy
+
+/*
+Index function: Que n index returns and removes the nth item in that que
+*/
+
+index : 
+     = index_i
+     = index_que
+     0 Que = index_new
+     0 = index_current
+     loop ( index_i index_current == not )
+     	  index_new index_que pop push
+	  1 index_current + = index_current
+     endloop
+     index_que pop = index_item
+     loop ( index_que sizeof 0 == not )
+     	  index_new index_que pop push
+     endloop
+     loop ( index_new sizeof 0 == not )
+     	   index_que index_new pop push
+     endloop
+     index_item
+     del index_item del index_new del index_que del index_i del index_current
+endindex
+
+/* test */
