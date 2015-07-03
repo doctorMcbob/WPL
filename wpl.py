@@ -1,7 +1,8 @@
 import os
-s, d, f = [], {}, {}
+s, d, f = [], {"global":{}}, {"global":{}}
 DEBUG=False
 def run(code):
+    current_namespace = "global"
     global DEBUG
     cmds=code.split()[::-1]
     cmd=""
@@ -86,7 +87,7 @@ def run(code):
                 s.append("false")
             else: s.append("true")
 
-        elif cmd == "=": d[cmds.pop()] = s.pop()
+        elif cmd == "=": d[current_namespace][cmds.pop()] = s.pop()
         elif cmd == "dup": s.append(s[-1])
         elif cmd == "swap": s.extend([s.pop(), s.pop()])
         elif cmd == "eat": s.pop()
@@ -203,10 +204,10 @@ def run(code):
         elif cmd == "del":
             item = cmds.pop()
             try:
-                del d[item]
+                del d[current_namespace][item]
             except IndexError:
                 try:
-                    del f[item]
+                    del f[current_namespace][item]
                 except IndexError:
                     raise IndexError(str(item)+" is not defined")
 
@@ -216,13 +217,28 @@ def run(code):
                 run(open(filename).read())
             else:
                 raise IOError(filename+"could not be imported")
-                
-        elif cmd in d: 
-            s.append(d[cmd])
+        elif cmd == "!namespace":
+            s.append(current_namespace)
+            
+        elif cmd == "namespace":
+            current_namespace = s.pop()
+            if not current_namespace in d:
+                d[current_namespace] = {}
+                f[current_namespace] = {}
 
-        elif cmd in f:
-            cmds.extend(f[cmd])
-        
+        elif cmd in d[current_namespace]:
+            s.append(d[current_namespace][cmd])
+
+        elif cmd in f[current_namespace]:
+            s.append(f[current_namespace][cmd])
+
+        elif cmd in d["global"]:
+            s.append(d["global"][cmd])
+
+        elif cmd in f["global"]:
+            s.append(f["global"][cmd])
+
+            
         else:
             try:
                 s.append(int(cmd))
@@ -297,9 +313,9 @@ inp if
     inp if
         " That is not what I told you to input! " print
     endif
-    ok print
+    " ok " print
 endif
-ok print
+" ok " print
 """
 
 debugWPL = """ 
@@ -321,4 +337,8 @@ if __name__ == "__main__":
         run(code)
     else:
         while True:
-            run(raw_input(" > "))
+            try:
+                run(raw_input(" > "))
+            except Exception as e:
+                print "ERROR: {}".format(e.message)
+                continue
