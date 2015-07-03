@@ -1,3 +1,4 @@
+import os
 s, d, f = [], {}, {}
 DEBUG=False
 def run(code):
@@ -209,6 +210,13 @@ def run(code):
                 except IndexError:
                     raise IndexError(str(item)+" is not defined")
 
+        elif cmd == "import":
+            filename=s.pop()
+            if os.path.isfile(filename) and filename[-4:] == ".wes":
+                run(open(filename).read())
+            else:
+                raise IOError(filename+"could not be imported")
+                
         elif cmd in d: 
             s.append(d[cmd])
 
