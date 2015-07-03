@@ -7,7 +7,7 @@ Function that generates a Que full of a range of ints
 the python equivalent to range(s.pop())
 */
 
-range : 
+" range " : 
       = range_i
       0 = range_n
       1 range_i - 
@@ -23,7 +23,7 @@ endrange
 Function that returns size of a Que to the stack
 */
 
-sizeof :
+" sizeof " :
        = size_que
        0 = size_n
        size_que FLAG push
@@ -48,7 +48,7 @@ endsizeof
 Function Copy. makes a copy of a Que
 */
 
-copy : 
+" copy " : 
      = copy_que
      0 Que = copy_quecopy
      0 = copy_i
@@ -66,7 +66,7 @@ endcopy
 Index function: Que n index returns and removes the nth item in that que
 */
 
-index : 
+" index " : 
      = index_i
      = index_que
      0 Que = index_new

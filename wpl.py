@@ -227,7 +227,7 @@ def run(code):
             try:
                 s.append(int(cmd))
             except ValueError:
-                s.append(cmd)
+                raise ValueError(str(cmd) + " is not defined")
 
 def debug(debug_options, cmd, cmds, s=s, d=d, f=f):
     global DEBUG
