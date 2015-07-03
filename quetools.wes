@@ -1,89 +1,116 @@
 /*
 WPL functions for working with Ques
+
+range
+	n range 
+	^creates a Que with the numbers in range n
+sizeof
+	q sizeof
+	^ puts the number of items in the Que on the stack 
+copy
+	q copy
+	^ puts a copy of the Que on the stack
+index
+	q n index
+	^ removes the nth item from the Que and puts it on the stack
 */
 
 /*	
 Function that generates a Que full of a range of ints
-the python equivalent to range(s.pop())
+the python equivalent: range(s.pop())
 */
 
 " range " : 
-      = range_i
-      0 = range_n
-      1 range_i - 
-      loop ( range_n 1 range_i - > )
+      !namespace
+      " qtools Range " namespace
+      = Name
+      = i
+      0 = n
+      1 i - 
+      loop ( n 1 i - > )
       	   dup 1 swap - 
-	   range_n 1 + = range_n
+	   n 1 + = n
       endloop
-      range_i Que
-      del range_i del range_n 
-endrange
+      i Que
+      Name namespace
+endqrange
 
 /* 
 Function that returns size of a Que to the stack
+python equivalent: len(Que)
 */
 
 " sizeof " :
-       = size_que
-       0 = size_n
-       size_que FLAG push
-       size_que pop 
-       loop ( dup FLAG == not )              	     
-	     size_que pop 
-	     size_n 1 + = size_n 
-       endloop
-       eat
-       size_n Stk = size_stk
-       0 = size_i
-       loop ( size_i size_n == not )
-	    size_que size_stk pop push
-	    size_i 1 + = size_i
-       endloop
-       size_n
-       del size_n del size_que del size_stk del size_i
-       
-endsizeof
+      !namespace
+      " qtools sizeof " namespace
+      = Name
+      = que
+      0 = n
+      que " FLAG " push
+      que pop 
+      loop ( dup " FLAG " == not )              	     
+	    que pop 
+	    n 1 + = n 
+      endloop
+      eat
+      n Stk = stk
+      0 = i
+      loop ( i n == not )
+      	   que stk pop push
+	   i 1 + = i
+      endloop
+      n
+      Name namespace        
+endqsizeof
 
 /*
 Function Copy. makes a copy of a Que
+a copy, not a pointer to the original
 */
 
 " copy " : 
-     = copy_que
-     0 Que = copy_quecopy
-     0 = copy_i
-     loop ( copy_i copy_que sizeof == not )
-     	  copy_que pop = copy_item
-	  copy_que _item push
-	  copy_quecopy copy_item push
-	  copy_i 1 + = copy_i
-     endloop
-     copy_quecopy
-     del copy_quecopy del copy_que del copy_i del copy_item
-endcopy
+      !namespace
+      " qtools copy " namespace
+      = Name
+      = que
+      0 Que = que_copy
+      0 = i
+      loop ( i que sizeof == not )
+     	   que pop = item
+	   que item push
+	   que_copy item push
+	   i 1 + = i
+      endloop
+      que_copy
+      Name namespace
+endqcopy
 
 /*
 Index function: Que n index returns and removes the nth item in that que
+python equivalent: Que[n]
 */
 
 " index " : 
-     = index_i
-     = index_que
-     0 Que = index_new
-     0 = index_current
-     loop ( index_i index_current == not )
-     	  index_new index_que pop push
-	  1 index_current + = index_current
-     endloop
-     index_que pop = index_item
-     loop ( index_que sizeof 0 == not )
-     	  index_new index_que pop push
-     endloop
-     loop ( index_new sizeof 0 == not )
-     	   index_que index_new pop push
-     endloop
-     index_item
-     del index_item del index_new del index_que del index_i del index_current
+      !namespace
+      " qtools index " namespace
+      = Name
+      = i
+      = que
+      0 Que = new
+      0 = current
+      loop ( i current == not )
+      	   new que pop push
+	   1 current + = current
+      endloop
+      que pop = item
+      loop ( que sizeof 0 == not )
+      	   new que pop push
+      endloop
+      loop ( index_new sizeof 0 == not )
+     	    qindex_que qindex_new pop push
+      endloop
+      item
+      Name namespace
 endindex
 
 /* test */
