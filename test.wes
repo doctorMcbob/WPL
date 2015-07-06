@@ -1,7 +1,0 @@
-3 = x
-x print
-" new " namespace
-2 = y
-y print
-" global " namespace
-y print
