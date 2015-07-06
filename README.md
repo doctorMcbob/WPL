@@ -94,5 +94,30 @@ DATA STRUCTURES:
 			push next item on the stack 
 			into the datastructure 
 
-quetools.wes is a lybrary of 
-   WPL functions for working with Ques
+		quetools.wes is a lybrary of 
+   		  WPL functions for working with Ques
+   
+   
+NAMESPACES:
+	
+	dictionary has "global":{}
+				^everything you create in the global
+				namespace goes here
+
+	namespace: sets current namespace to the next word on the stack
+		Name namespace 
+		^sets namespace to Name. 
+		
+		then the dictionary will have "Name":{}
+						     ^Everything you create
+						     in this namespace goes here
+						     
+	!namespace: puts the current namespace on the stack
+		This lets you do this:
+		!namespace = Name
+		" new namespace " namespace
+		... code code code ...
+		Name namespace
+		
+		this is how WPL handles scopes. Its on the programmer to make the scopes.
+		
