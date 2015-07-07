@@ -2,11 +2,11 @@
 WPL functions for working with Ques
 
 range
-	n range 
+	n range
 	^creates a Que with the numbers in range n
 sizeof
 	q sizeof
-	^ puts the number of items in the Que on the stack 
+	^ puts the number of items in the Que on the stack
 copy
 	q copy
 	^ puts a copy of the Que on the stack
@@ -15,27 +15,27 @@ index
 	^ removes the nth item from the Que and puts it on the stack
 */
 
-/*	
+/*
 Function that generates a Que full of a range of ints
 the python equivalent: range(s.pop())
 */
 
-" range " : 
+" range " :
       !namespace
       " qtools Range " namespace
       = Name
       = i
       0 = n
-      1 i - 
+      1 i -
       loop ( n 1 i - > )
-      	   dup 1 swap - 
+      	   dup 1 swap -
 	   n 1 + = n
       endloop
       i Que
       Name namespace
 endrange
 
-/* 
+/*
 Function that returns size of a Que to the stack
 python equivalent: len(Que)
 */
@@ -47,10 +47,10 @@ python equivalent: len(Que)
       = que
       0 = n
       que " FLAG " push
-      que pop 
-      loop ( dup " FLAG " == not )              	     
-	    que pop 
-	    n 1 + = n 
+      que pop
+      loop ( dup " FLAG " == not )
+	    que pop
+	    n 1 + = n
       endloop
       eat
       n Stk = stk
@@ -60,7 +60,7 @@ python equivalent: len(Que)
 	   i 1 + = i
       endloop
       n
-      Name namespace        
+      Name namespace
 endsizeof
 
 /*
@@ -68,7 +68,7 @@ Function Copy. makes a copy of a Que
 a copy, not a pointer to the original
 */
 
-" copy " : 
+" copy " :
       !namespace
       " qtools copy " namespace
       = Name
@@ -90,7 +90,7 @@ Index function: Que n index returns and removes the nth item in that que
 python equivalent: Que[n]
 */
 
-" index " : 
+" index " :
       !namespace
       " qtools index " namespace
       = Name
