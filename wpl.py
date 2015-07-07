@@ -8,8 +8,8 @@ def run(code):
     current_namespace = "global"
     global DEBUG
     debug_options = ["off", "quit", "s",
-                                    "d", "f", "cmds",
-                                    "cmd", "step", "cmdsappend"]
+                     "d", "f", "cmds",
+                     "cmd", "step", "cmdsappend"]
     cmds = code.split()[::-1]
     while cmds:
         cmd = cmds.pop()
