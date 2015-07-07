@@ -7,14 +7,11 @@ DEBUG = False
 def run(code):
     current_namespace = "global"
     global DEBUG
-    debug_options = ["off", "quit", "s",
-                     "d", "f", "cmds",
-                     "cmd", "step", "cmdsappend"]
     cmds = code.split()[::-1]
     while cmds:
         cmd = cmds.pop()
         if DEBUG:
-            debug(debug_options=debug_options, cmd=cmd, cmds=cmds)
+            debug(cmd=cmd, cmds=cmds)
         if cmd == "print":
             print s.pop()
         elif cmd == "!F":
@@ -279,8 +276,11 @@ def run(code):
                 raise ValueError(str(cmd) + " is not defined")
 
 
-def debug(debug_options, cmd, cmds, s=s, d=d, f=f):
+def debug(cmd, cmds, s=s, d=d, f=f):
     global DEBUG
+    debug_options = ["quit", "cmds", "cmd",
+                     "s", "d", "f", "step",
+                     "cmdsappend", "off"]
     print "cmd: ", cmd, "| d: ", d, "| s: ", s
     i = ""
     while i != "step" and DEBUG:
