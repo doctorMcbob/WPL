@@ -28,8 +28,8 @@ the python equivalent: range(s.pop())
       0 = n
       1 i -
       loop ( n 1 i - > )
-      	   dup 1 swap -
-	   n 1 + = n
+            dup 1 swap -
+            n 1 + = n
       endloop
       i Que
       Name namespace
@@ -49,15 +49,15 @@ python equivalent: len(Que)
       que " FLAG " push
       que pop
       loop ( dup " FLAG " == not )
-	    que pop
-	    n 1 + = n
+            que pop
+            n 1 + = n
       endloop
       eat
       n Stk = stk
       0 = i
       loop ( i n == not )
-      	   que stk pop push
-	   i 1 + = i
+      	que stk pop push
+            i 1 + = i
       endloop
       n
       Name namespace
@@ -76,10 +76,10 @@ a copy, not a pointer to the original
       0 Que = que_copy
       0 = i
       loop ( i que sizeof == not )
-     	   que pop = item
-	   que item push
-	   que_copy item push
-	   i 1 + = i
+            que pop = item
+            que item push
+            que_copy item push
+            i 1 + = i
       endloop
       que_copy
       Name namespace
@@ -99,15 +99,15 @@ python equivalent: Que[n]
       0 Que = new
       0 = current
       loop ( i current == not )
-      	   new que pop push
-	   1 current + = current
+            new que pop push
+            1 current + = current
       endloop
       que pop = item
       loop ( que sizeof 0 == not )
-      	   new que pop push
+            new que pop push
       endloop
       loop ( index_new sizeof 0 == not )
-     	    qindex_que qindex_new pop push
+            qindex_que qindex_new pop push
       endloop
       item
       Name namespace
